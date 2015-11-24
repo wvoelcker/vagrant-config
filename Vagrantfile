@@ -76,7 +76,7 @@ Vagrant.configure(2) do |config|
 			printf "\n--------------------------------------------------------\n"
 		}
 
-		say "Updating apt-get"
+		say "Updating apt sources"
 		apt-get update
 
 		say "Installing Apache and setting it up."
@@ -93,7 +93,7 @@ Vagrant.configure(2) do |config|
 		mysql -u root mysql <<< "GRANT ALL ON *.* TO 'root'@'%'; FLUSH PRIVILEGES;"
 
 		say "Installing miscellaneous useful and necessary packages"
-		apt-get install -y build-essential software-properties-common vim curl wget tmux
+		apt-get install -y git build-essential software-properties-common vim curl wget tmux
 
 		say "Installing PHP and Modules"
 		apt-get install -y php5 php5-cli php5-common php5-imagick php5-imap php5-gd libapache2-mod-php5 php5-mysql php5-curl php5-mcrypt php5-curl
@@ -126,11 +126,13 @@ Vagrant.configure(2) do |config|
 		echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" > /etc/php5/mods-available/mailcatcher.ini
 		php5enmod mailcatcher
 
-		SHELL
+	SHELL
 
+	# Copy git config from host machine
+	config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
 
-		# Copy the vhost file to default and reload apache - run every vagrant up
-		config.vm.provision "shell", run:"always", inline: <<-SHELL
+	# Update Apache config and restart apache - run every vagrant up
+	config.vm.provision "shell", run:"always", inline: <<-SHELL
 
 		# Function for outputting progress / logging information
 		function say {
@@ -145,4 +147,5 @@ Vagrant.configure(2) do |config|
 		say "Reloading apache"
 		service apache2 reload
 	SHELL
+
 end
