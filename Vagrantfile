@@ -132,6 +132,36 @@ Vagrant.configure(2) do |config|
 		echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" > /etc/php5/mods-available/mailcatcher.ini
 		php5enmod mailcatcher
 
+		if [ -f /vagrant/package.json ];
+		then
+		   say "package.json already exists; not replacing"
+		else
+			say "Writing default package.json"
+			echo '{
+				"name": "Hippobox",
+				"version": "0.0.1",
+				"description": "Hippobox website",
+				"devDependencies": {
+					"gulp": "~3.9.0"
+				}
+			}' > /vagrant/package.json
+		fi
+
+		if [ -f /vagrant/package.json ];
+		then
+		   say "composer.json already exists; not replacing"
+		else
+			say "Writing default composer.json"
+			echo '{
+				{
+					"require": {
+						"mustache/mustache": "^2.9",
+						"phroute/phroute": "^2.1"
+					}
+				}
+			}' > /vagrant/composer.json
+		fi
+
 	SHELL
 
 	# Copy git config from host machine
