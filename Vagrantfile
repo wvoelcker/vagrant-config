@@ -108,8 +108,14 @@ Vagrant.configure(2) do |config|
 		say "Installing sass"
 		gem install sass
 
-		say "Installing node.js"
-		apt-get install -y	node
+		say "Installing node.js, npm, and bower"
+		apt-get install -y nodejs
+		apt-get install -y npm
+		ln -s /usr/bin/nodejs /usr/bin/node
+		npm install -g bower
+
+		say "Installing gulp"
+		npm install -g gulp
 
 		say "Installing and setting up Mailcatcher"
 		apt-get install -y libsqlite3-dev
