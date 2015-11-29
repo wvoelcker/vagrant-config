@@ -184,6 +184,13 @@ Vagrant.configure(2) do |config|
 				var rename = require('gulp-rename');
 				var imagemin = require("gulp-imagemin");
 
+				var targetDir = {
+					"base": "www/resources",
+					"javascript": "javascript",
+					"css": "css",
+					"images": "images"
+				};
+
 				gulp.task("jslint", function() {
 					return gulp.src("javascript/*.js")
 							.pipe(jshint())
@@ -192,17 +199,22 @@ Vagrant.configure(2) do |config|
 
 				gulp.task("jsmin", function() {
 					return gulp.src("javascript/*.js")
-							.pipe(concat("all.js"))
+							.pipe(concat("custom.js"))
 							.pipe(gulp.dest("www"))
-							.pipe(rename("all.min.js"))
+							.pipe(rename("custom.min.js"))
 							.pipe(uglify())
-							.pipe(gulp.dest("www/resources"))
+							.pipe(gulp.dest(targetDir.base+"/"+targetDir.javascript));
+				});
+
+				gulp.task("jsthirdparty", function() {
+					return gulp.src("bower_components/html5shiv/dist/html5shiv-printshiv.min.js")
+							.pipe(gulp.dest(targetDir.base+"/"+targetDir.javascript));
 				});
 
 				gulp.task("sass", function() {
 					return gulp.src("scss/*.scss")
 							.pipe(sass())
-							.pipe(gulp.dest("www/resources/css"))
+							.pipe(gulp.dest(targetDir.base+"/"+targetDir.css));
 				});
 
 				gulp.task("imagemin", function() {
@@ -210,11 +222,10 @@ Vagrant.configure(2) do |config|
 							.pipe(imagemin({
 								progressive: true,
 							}))
-							.pipe(gulp.dest("www/resources/images"))
+							.pipe(gulp.dest(targetDir.base+"/"+targetDir.images));
 				});
 
-				gulp.task("default", ["jslint", "jsmin", "sass", "imagemin"]);
-
+				gulp.task("default", ["jslint", "jsmin", "jsthirdparty", "sass", "imagemin"]);
 			' > /vagrant/gulpfile.js
 		fi
 
