@@ -169,6 +169,22 @@ Vagrant.configure(2) do |config|
 			}' > /vagrant/composer.json
 		fi
 
+		if [ -f /vagrant/bower.json ];
+		then
+		   say "bower.json already exists; not replacing"
+		else
+			say "Writing default bower.json"
+			echo '
+				{
+				  "name": "Default",
+				  "description": "Default website",
+				  "dependencies": {
+					"html5shiv": "~3.7.3"
+				  }
+				}
+			' > /vagrant/bower.json
+		fi
+
 		if [ -f /vagrant/gulpfile.js ];
 		then
 		   say "gulpfile.js already exists; not replacing"
