@@ -142,7 +142,14 @@ Vagrant.configure(2) do |config|
 				"version": "0.0.1",
 				"description": "Hippobox website",
 				"devDependencies": {
-					"gulp": "~3.9.0"
+					"gulp": "~3.9.0",
+					"gulp-rename": "~1.2.2",
+					"gulp-uglify": "~1.5.1",
+					"gulp-concat": "~2.6.0",
+					"gulp-jshint": "~2.0.0",
+					"gulp-imagemin": "~2.4.0",
+					"jshint": "~2.9.1-rc1",
+					"gulp-sass": "~2.1.0"
 				}
 			}' > /vagrant/package.json
 		fi
