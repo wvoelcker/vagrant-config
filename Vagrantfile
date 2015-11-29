@@ -218,7 +218,7 @@ Vagrant.configure(2) do |config|
 				});
 
 				gulp.task("imagemin", function() {
-					return gulp.src("images/*")
+					return gulp.src("images/**/*")
 							.pipe(imagemin({
 								progressive: true,
 							}))
