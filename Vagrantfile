@@ -138,9 +138,9 @@ Vagrant.configure(2) do |config|
 		else
 			say "Writing default package.json"
 			echo '{
-				"name": "Hippobox",
+				"name": "Default",
 				"version": "0.0.1",
-				"description": "Hippobox website",
+				"description": "Default website",
 				"devDependencies": {
 					"gulp": "~3.9.0",
 					"gulp-rename": "~1.2.2",
