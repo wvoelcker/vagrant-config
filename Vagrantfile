@@ -169,6 +169,55 @@ Vagrant.configure(2) do |config|
 			}' > /vagrant/composer.json
 		fi
 
+		if [ -f /vagrant/gulpfile.js ];
+		then
+		   say "gulpfile.js already exists; not replacing"
+		else
+			say "Writing default gulpfile.js"
+			echo '
+				var gulp = require("gulp");
+
+				var jshint = require('gulp-jshint');
+				var sass = require('gulp-sass');
+				var concat = require('gulp-concat');
+				var uglify = require('gulp-uglify');
+				var rename = require('gulp-rename');
+				var imagemin = require("gulp-imagemin");
+
+				gulp.task("jslint", function() {
+					return gulp.src("javascript/*.js")
+							.pipe(jshint())
+							.pipe(jshint.reporter("default"));
+				});
+
+				gulp.task("jsmin", function() {
+					return gulp.src("javascript/*.js")
+							.pipe(concat("all.js"))
+							.pipe(gulp.dest("www"))
+							.pipe(rename("all.min.js"))
+							.pipe(uglify())
+							.pipe(gulp.dest("www/resources"))
+				});
+
+				gulp.task("sass", function() {
+					return gulp.src("scss/*.scss")
+							.pipe(sass())
+							.pipe(gulp.dest("www/resources/css"))
+				});
+
+				gulp.task("imagemin", function() {
+					return gulp.src("images/*")
+							.pipe(imagemin({
+								progressive: true,
+							}))
+							.pipe(gulp.dest("www/resources/images"))
+				});
+
+				gulp.task("default", ["jslint", "jsmin", "sass", "imagemin"]);
+
+			' > /vagrant/gulpfile.js
+		fi
+
 	SHELL
 
 	# Copy git config from host machine
