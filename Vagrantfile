@@ -160,11 +160,15 @@ Vagrant.configure(2) do |config|
 		else
 			say "Writing default composer.json"
 			echo '{
-				{
-					"require": {
-						"mustache/mustache": "^2.9",
-						"phroute/phroute": "^2.1"
+				"repositories": [
+					{
+						"type": "vcs",
+						"url": "https://github.com/wvoelcker/project"
 					}
+				]
+
+				"require": {
+					"willv/project": "dev-master"
 				}
 			}' > /vagrant/composer.json
 		fi
