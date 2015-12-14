@@ -149,7 +149,8 @@ Vagrant.configure(2) do |config|
 					"gulp-jshint": "~2.0.0",
 					"gulp-imagemin": "~2.4.0",
 					"jshint": "~2.9.1-rc1",
-					"gulp-sass": "~2.1.0"
+					"gulp-sass": "~2.1.0",
+					"gulp-sourcemaps": "~1.6.0"
 				}
 			}' > /vagrant/package.json
 		fi
