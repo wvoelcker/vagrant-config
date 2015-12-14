@@ -203,6 +203,7 @@ Vagrant.configure(2) do |config|
 				var uglify = require("gulp-uglify");
 				var rename = require("gulp-rename");
 				var imagemin = require("gulp-imagemin");
+				var sourcemaps = require('gulp-sourcemaps');
 
 				var targetDir = {
 					"base": "www/resources",
@@ -233,7 +234,9 @@ Vagrant.configure(2) do |config|
 
 				gulp.task("sass", function() {
 					return gulp.src("scss/*.scss")
+							.pipe(sourcemaps.init())
 							.pipe(sass())
+							.pipe(sourcemaps.write("./source-maps"))
 							.pipe(gulp.dest(targetDir.base+"/"+targetDir.css));
 				});
 
